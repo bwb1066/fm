@@ -1,3 +1,59 @@
+/* subscribe section */
+.columns-container {
+  background-color: #080a1a;
+  margin: 0 !important;
+  padding: 60px 0 !important;
+}
+
+.columns-container h2 {
+  color: white;
+  font-size: var(--heading-font-size-l);
+  margin: 0 0 16px;
+}
+
+.columns-container .columns p {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-size: var(--body-font-size-xs);
+}
+
+/* right column: input + button side by side */
+.columns-container .columns > div > div:last-child {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+}
+
+.columns-container .columns > div > div:last-child p:first-child {
+  flex: 1;
+  max-width: 320px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 12px 16px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: var(--body-font-size-xs);
+  display: flex;
+  align-items: center;
+}
+
+.columns-container .columns > div > div:last-child p:last-child {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: none;
+  display: flex;
+  align-items: center;
+}
+
+.columns-container .columns > div > div:last-child p:last-child strong {
+  display: block;
+  padding: 12px 20px;
+  color: white;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.columns-container .columns > div > div:last-child p:last-child strong::after {
+  content: ' »';
+}
+
 .columns > div {
   display: flex;
   flex-direction: column;

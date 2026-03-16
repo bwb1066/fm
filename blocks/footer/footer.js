@@ -1,44 +1,39 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
+
 /**
  * loads and decorates the footer
  * @param {Element} block The footer block element
  */
 export default async function decorate(block) {
-  // load footer as fragment
   const footerMeta = getMetadata('footer');
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
   const fragment = await loadFragment(footerPath);
 
-  // decorate footer DOM
   block.textContent = '';
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
+  block.append(footer);
 
-  // unwrap all <strong> tags inside links (fm.com links are regular weight)
-  footer.querySelectorAll('a strong, li strong').forEach((strong) => {
+  footer.querySelectorAll('strong').forEach((strong) => {
     strong.replaceWith(...strong.childNodes);
   });
 
-  // collect all top-level content elements
-  const contentEl = footer.querySelector('div');
-  if (!contentEl) {
-    block.append(footer);
-    return;
-  }
+  const contentEl = footer.querySelector('.default-content-wrapper') || footer.querySelector('div div') || footer.querySelector('div');
+  if (!contentEl) return;
+
   const children = [...contentEl.children];
 
-  // company section: logo picture + tagline
   const company = document.createElement('div');
   company.className = 'footer-company';
 
-  // links section: H3 + UL pairs as columns
   const linksWrapper = document.createElement('div');
   linksWrapper.className = 'footer-links';
 
   let currentCol = null;
   let reachedLinks = false;
+  let copyrightEl = null;
 
   children.forEach((el) => {
     const tag = el.tagName;
@@ -54,17 +49,28 @@ export default async function decorate(block) {
       linksWrapper.append(currentCol);
     } else if (tag === 'UL' && currentCol) {
       currentCol.append(el);
+    } else if (tag === 'P' && reachedLinks) {
+      copyrightEl = el;
+    } else if (tag === 'DIV') {
+      // columns block containing social icons + copyright
+      copyrightEl = el;
     }
-    // copyright paragraph is omitted for brevity; add back if needed
   });
 
-  // main nav row
+
+  // nav row
   const navRow = document.createElement('div');
   navRow.className = 'footer-nav';
   navRow.append(company, linksWrapper);
 
-  contentEl.innerHTML = '';
-  contentEl.append(navRow);
+  // bottom bar: copyright only
+  const bottomBar = document.createElement('div');
+  bottomBar.className = 'footer-bottom';
+  if (copyrightEl) {
+    copyrightEl.className = 'footer-copyright';
+    bottomBar.append(copyrightEl);
+  }
 
-  block.append(footer);
+  contentEl.innerHTML = '';
+  contentEl.append(navRow, bottomBar);
 }
