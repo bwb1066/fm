@@ -20,6 +20,31 @@
   line-height: 0;
 }
 
+.cards .cards-card-body a.button:any-link,
+.cards .cards-card-body a:any-link {
+  display: inline;
+  border: none;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: var(--accent-color);
+  font-weight: 600;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.cards .cards-card-body a.button:any-link::after,
+.cards .cards-card-body a:any-link::after {
+  content: ' \00BB';
+}
+
+.cards .cards-card-body a.button:hover,
+.cards .cards-card-body a:hover {
+  color: var(--link-hover-color);
+  text-decoration: none;
+}
+
 .cards > ul > li img {
   width: 100%;
   aspect-ratio: 4 / 3;
