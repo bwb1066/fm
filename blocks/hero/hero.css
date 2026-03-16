@@ -5,45 +5,50 @@
 
 .hero {
   position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   min-height: 500px;
   padding: 60px 24px;
 }
 
-.hero picture {
+/* background image — moved to direct child of .hero by hero.js */
+.hero > p {
+  margin: 0;
   position: absolute;
-  z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+  z-index: 0;
 }
 
-.hero img {
-  object-fit: cover;
+.hero > p picture {
+  display: block;
   width: 100%;
   height: 100%;
 }
 
-/* outer row: centers the card within the full-bleed hero */
+.hero > p img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* content wrapper — centers the card, above the image */
 .hero > div {
+  position: relative;
+  z-index: 1;
   max-width: 1200px;
   margin: auto;
   width: 100%;
 }
 
-/* content card */
+/* frosted content card */
 .hero > div > div {
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(8px);
   border-radius: 12px;
   padding: 48px;
   max-width: 620px;
-}
-
-/* hide the picture's wrapper paragraph — picture is already absolutely positioned */
-.hero > div > div > p:has(picture) {
-  display: none;
 }
 
 /* heading */
@@ -57,19 +62,19 @@
 }
 
 /* body text */
-.hero p {
+.hero > div > div p {
   margin: 0 0 32px;
   color: #0d102b;
 }
 
-/* CTA link — dark navy button with chevron */
+/* CTA button — slate navy with chevron */
 .hero a:any-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background-color: #0d102b;
+  background-color: #383b54;
   color: white;
-  padding: 14px 24px;
+  padding: 8px 24px;
   border-radius: 4px;
   font-weight: 600;
   font-size: var(--body-font-size-s);

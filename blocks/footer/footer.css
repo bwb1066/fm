@@ -4,15 +4,6 @@ footer {
   font-size: var(--body-font-size-xs);
 }
 
-footer a:any-link {
-  color: white;
-}
-
-footer a:hover {
-  color: var(--accent-color);
-  text-decoration: none;
-}
-
 footer .footer > div {
   margin: auto;
   max-width: 1200px;
@@ -23,8 +14,89 @@ footer .footer p {
   margin: 0;
 }
 
+/* nav row: company on left, link columns on right */
+footer .footer-nav {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+/* company: logo + tagline */
+footer .footer-company {
+  flex: 0 0 200px;
+}
+
+footer .footer-company img {
+  width: 80px;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+footer .footer-company p {
+  color: white;
+  font-size: var(--body-font-size-xs);
+}
+
+/* link columns wrapper */
+footer .footer-links {
+  display: flex;
+  flex: 1;
+  gap: 32px;
+}
+
+footer .footer-col {
+  flex: 1;
+}
+
+/* H3 column headings — FM Review Web, uppercase */
+footer h3 {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: white;
+  margin: 0 0 24px;
+}
+
+/* link lists */
+footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+footer li {
+  margin-bottom: 12px;
+}
+
+/* links */
+footer a:any-link {
+  color: white;
+  font-weight: 400;
+}
+
+footer a:hover {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
 @media (width >= 900px) {
   footer .footer > div {
     padding: 40px 32px 24px;
+  }
+}
+
+@media (width < 600px) {
+  footer .footer-nav {
+    flex-direction: column;
+  }
+
+  footer .footer-links {
+    flex-wrap: wrap;
+  }
+
+  footer .footer-col {
+    flex: 0 0 calc(50% - 16px);
   }
 }
