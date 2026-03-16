@@ -38,6 +38,11 @@
 
   /* nav height */
   --nav-height: 64px;
+
+  /* brand colors */
+  --nav-bg-color: #080a1a;
+  --footer-bg-color: #0d102b;
+  --accent-color: #ff5100;
 }
 
 /* fallback fonts */
