@@ -316,3 +316,50 @@ main .section.highlight {
   margin: 0;
   padding: 40px 0;
 }
+
+/* leading choice callout — white card inside dark section */
+main .section.cards-container > .default-content-wrapper {
+  background: white;
+  border-radius: 12px;
+  max-width: 1000px;
+  padding: 48px 64px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+main .section.cards-container > .default-content-wrapper ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+main .section.cards-container > .default-content-wrapper h3 {
+  color: #0d102b;
+  margin: 0 0 16px;
+}
+
+main .section.cards-container > .default-content-wrapper p {
+  color: #505050;
+  margin: 0 0 8px;
+}
+
+main .section.cards-container > .default-content-wrapper .button-wrapper {
+  margin: 24px 0 0;
+}
+
+main .section.cards-container > .default-content-wrapper .button.primary {
+  background-color: #383b54;
+  border-color: #383b54;
+  color: white;
+  border-radius: 6px;
+}
+
+main .section.cards-container > .default-content-wrapper .button.primary::after {
+  content: ' \00BB\00BB';
+  letter-spacing: -2px;
+}
+
+main .section.cards-container > .default-content-wrapper .button.primary:hover {
+  background-color: #1c1f3c;
+  border-color: #1c1f3c;
+}
