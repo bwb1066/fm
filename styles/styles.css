@@ -322,7 +322,7 @@ main .section.highlight {
 main .section.cards-container > .default-content-wrapper {
   background: white;
   border-radius: 12px;
-  max-width: 1000px;
+  max-width: 1200px;
   padding: 48px 64px;
   text-align: center;
   box-sizing: border-box;

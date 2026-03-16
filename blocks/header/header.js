@@ -199,7 +199,98 @@ export default async function decorate(block) {
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
+      const subList = navSection.querySelector(':scope > ul');
+      if (subList) {
+        navSection.classList.add('nav-drop');
+
+        // build mega menu panel from the nested ul
+        const sectionName = navSection.querySelector('a')?.textContent.trim().toUpperCase() || '';
+        const megaMenu = document.createElement('div');
+        megaMenu.className = 'mega-menu';
+        megaMenu.addEventListener('click', (e) => e.stopPropagation());
+
+        // extract fragment table (sidebar) before building grid
+        const fragmentTable = navSection.querySelector('table');
+        let fragmentPath = null;
+        if (fragmentTable) {
+          const rows = [...fragmentTable.querySelectorAll('tr')];
+          const isFragment = rows[0]?.textContent.trim().toLowerCase() === 'fragment';
+          if (isFragment && rows[1]) {
+            const fragLink = rows[1].querySelector('a');
+            if (fragLink) fragmentPath = new URL(fragLink.href).pathname;
+          }
+          fragmentTable.remove();
+        }
+
+        const megaMain = document.createElement('div');
+        megaMain.className = 'mega-menu-main';
+
+        const sectionHeader = document.createElement('div');
+        sectionHeader.className = 'mega-menu-section-header';
+        sectionHeader.textContent = sectionName;
+
+        const grid = document.createElement('ul');
+        grid.className = 'mega-menu-grid';
+        subList.querySelectorAll(':scope > li').forEach((item) => {
+          const link = item.querySelector('a');
+          if (!link) return;
+          // description is a text node after the <a>, separated by |
+          const fullText = item.textContent;
+          const pipeIdx = fullText.indexOf('|');
+          const desc = pipeIdx !== -1 ? fullText.substring(pipeIdx + 1).trim() : '';
+          const gridItem = document.createElement('li');
+          gridItem.className = 'mega-menu-item';
+          gridItem.append(link);
+          if (desc) {
+            const descEl = document.createElement('p');
+            descEl.className = 'mega-menu-item-desc';
+            descEl.textContent = desc;
+            gridItem.append(descEl);
+          }
+          grid.append(gridItem);
+        });
+
+        megaMain.append(sectionHeader, grid);
+        megaMenu.append(megaMain);
+
+        // load sidebar fragment if present
+        if (fragmentPath) {
+          loadFragment(fragmentPath).then((frag) => {
+            if (frag) {
+              const sidebar = document.createElement('div');
+              sidebar.className = 'mega-menu-sidebar';
+              while (frag.firstElementChild) sidebar.append(frag.firstElementChild);
+
+              // style the first heading as section label
+              const sectionLabel = sidebar.querySelector('h1, h2, h3, h4');
+              if (sectionLabel) {
+                // eslint-disable-next-line no-console
+                console.log('[sidebar] section label tag:', sectionLabel.tagName, sectionLabel.textContent);
+                sectionLabel.className = 'sidebar-section-label';
+              }
+
+              // wrap each h3 + following siblings (until next h3) into a card
+              sidebar.querySelectorAll('h3').forEach((h3) => {
+                const card = document.createElement('div');
+                card.className = 'sidebar-article';
+                h3.replaceWith(card);
+                card.append(h3);
+                let next = card.nextElementSibling;
+                while (next && next.tagName !== 'H3') {
+                  const following = next.nextElementSibling;
+                  card.append(next);
+                  next = following;
+                }
+              });
+
+              megaMenu.append(sidebar);
+            }
+          });
+        }
+
+        subList.replaceWith(megaMenu);
+      }
+
       navSection.addEventListener('click', () => {
         if (isDesktop.matches) {
           const expanded = navSection.getAttribute('aria-expanded') === 'true';
@@ -227,4 +318,16 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
+
+  // hide nav on scroll down, show on scroll up
+  let lastScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    if (currentScrollY > lastScrollY && currentScrollY > 80) {
+      navWrapper.classList.add('nav-hidden');
+    } else {
+      navWrapper.classList.remove('nav-hidden');
+    }
+    lastScrollY = currentScrollY;
+  }, { passive: true });
 }
