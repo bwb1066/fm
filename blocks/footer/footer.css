@@ -1,6 +1,16 @@
 footer {
-  background-color: var(--light-color);
+  background-color: var(--footer-bg-color);
+  color: white;
   font-size: var(--body-font-size-xs);
+}
+
+footer a:any-link {
+  color: white;
+}
+
+footer a:hover {
+  color: var(--accent-color);
+  text-decoration: none;
 }
 
 footer .footer > div {
