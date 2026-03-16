@@ -206,18 +206,21 @@ header nav .nav-sections ul > li > ul > li {
 
   header nav .nav-sections .default-content-wrapper > ul > li {
     position: relative;
-    padding-right: 18px;
     cursor: pointer;
     padding-bottom: 4px;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li::after {
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-drop {
+    padding-right: 18px;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-drop::after {
     content: '';
     display: inline-block;
     position: absolute;
-    top: 0.4em;
+    top: calc(50% - 2px);
     right: 2px;
-    transform: rotate(135deg);
+    transform: translateY(-75%) rotate(135deg);
     width: 6px;
     height: 6px;
     border-width: 1.5px 1.5px 0 0;
@@ -231,15 +234,14 @@ header nav .nav-sections ul > li > ul > li {
     position: absolute;
     bottom: -4px;
     left: 0;
-    right: 18px;
+    right: 0;
     height: 2px;
     background-color: var(--accent-color);
   }
 
-  header nav .nav-sections .nav-drop[aria-expanded='true']::after {
-    top: unset;
-    bottom: 0.6em;
-    transform: rotate(315deg);
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-drop[aria-expanded='true']::after {
+    top: calc(50% - 2px);
+    transform: translateY(-25%) rotate(315deg);
   }
 
   header nav .nav-sections ul {

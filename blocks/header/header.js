@@ -171,8 +171,13 @@ export default async function decorate(block) {
     nav.append(toolsDiv);
   }
 
-  // strip <strong> from nav links so they render at regular weight
+  // strip <strong> from nav links and remove button styling added by decorateButtons
   nav.querySelectorAll('.nav-sections strong').forEach((s) => s.replaceWith(...s.childNodes));
+  nav.querySelectorAll('.nav-sections a').forEach((a) => {
+    a.classList.remove('button', 'primary', 'secondary', 'accent');
+    const wrapper = a.closest('.button-wrapper');
+    if (wrapper) wrapper.className = '';
+  });
 
   const navBrand = nav.querySelector('.nav-brand');
   const brandLink = navBrand.querySelector('.button');
