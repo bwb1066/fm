@@ -4,6 +4,8 @@ header .nav-wrapper {
   width: 100%;
   z-index: 2;
   position: fixed;
+  top: 0;
+  left: 0;
 }
 
 header nav {
@@ -153,7 +155,7 @@ header .nav-brand {
 }
 
 header nav .nav-brand img {
-  width: 128px;
+  width: 72px;
   height: auto;
 }
 
@@ -194,6 +196,7 @@ header nav .nav-sections ul > li > ul > li {
     display: block;
     visibility: visible;
     white-space: nowrap;
+    margin-left: auto;
   }
 
   header nav[aria-expanded='true'] .nav-sections {
@@ -273,4 +276,39 @@ header nav .nav-sections ul > li > ul > li {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+header nav .nav-tool-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: white;
+  opacity: 0.85;
+}
+
+header nav .nav-tool-icon:hover {
+  opacity: 1;
+}
+
+header nav .nav-tool-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+header nav .nav-tool-divider {
+  width: 1px;
+  height: 18px;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 0 4px;
+}
+
+@media (width >= 900px) {
+  header nav .nav-tools {
+    display: flex;
+  }
 }

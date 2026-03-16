@@ -37,11 +37,11 @@
   --heading-font-size-xs: 22px;
 
   /* nav height */
-  --nav-height: 64px;
+  --nav-height: 72px;
 
   /* brand colors */
   --nav-bg-color: #080a1a;
-  --footer-bg-color: #0d102b;
+  --footer-bg-color: #080a1a;
   --accent-color: #ff5100;
 }
 

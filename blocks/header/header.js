@@ -130,6 +130,43 @@ export default async function decorate(block) {
     if (section) section.classList.add(`nav-${c}`);
   });
 
+  // if nav content is a single section, split brand / sections / tools
+  if (!nav.querySelector('.nav-sections')) {
+    const brand = nav.querySelector('.nav-brand');
+    if (brand) {
+      // move the ul into a new nav-sections div
+      const ul = brand.querySelector('ul');
+      if (ul) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'default-content-wrapper';
+        wrapper.append(ul);
+        const sectionsDiv = document.createElement('div');
+        sectionsDiv.className = 'nav-sections';
+        sectionsDiv.append(wrapper);
+        brand.after(sectionsDiv);
+      }
+    }
+
+    // create tools section with search + language + login icons
+    const toolsDiv = document.createElement('div');
+    toolsDiv.className = 'nav-tools';
+    toolsDiv.innerHTML = `
+      <a href="/search" aria-label="Search" class="nav-tool-icon">
+        <img src="/icons/search.svg" alt="Search" width="20" height="20">
+      </a>
+      <span class="nav-tool-divider"></span>
+      <a href="https://www.fmclient.com" aria-label="Client login" class="nav-tool-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="white" stroke-width="1.5"/>
+          <path d="M3 22C3 17.0294 7.02944 13 12 13C16.9706 13 21 17.0294 21 22" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </a>`;
+    nav.append(toolsDiv);
+  }
+
+  // strip <strong> from nav links so they render at regular weight
+  nav.querySelectorAll('.nav-sections strong').forEach((s) => s.replaceWith(...s.childNodes));
+
   const navBrand = nav.querySelector('.nav-brand');
   const brandLink = navBrand.querySelector('.button');
   if (brandLink) {

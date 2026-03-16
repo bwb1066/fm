@@ -63,12 +63,25 @@ export default async function decorate(block) {
   navRow.className = 'footer-nav';
   navRow.append(company, linksWrapper);
 
-  // bottom bar: copyright only
+  // bottom bar: social icons left, copyright right
   const bottomBar = document.createElement('div');
   bottomBar.className = 'footer-bottom';
   if (copyrightEl) {
-    copyrightEl.className = 'footer-copyright';
-    bottomBar.append(copyrightEl);
+    // build icons row from all pictures in the columns block
+    const iconsRow = document.createElement('div');
+    iconsRow.className = 'footer-social-icons';
+    copyrightEl.querySelectorAll('picture').forEach((pic) => {
+      const link = pic.closest('a') || pic;
+      iconsRow.append(link);
+    });
+
+    // get copyright text from the second cell or any remaining text node
+    const copyrightText = document.createElement('div');
+    copyrightText.className = 'footer-copyright';
+    const textCell = copyrightEl.querySelector('div > div:last-child');
+    if (textCell) copyrightText.append(...textCell.childNodes);
+
+    bottomBar.append(iconsRow, copyrightText);
   }
 
   contentEl.innerHTML = '';

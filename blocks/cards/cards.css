@@ -1,25 +1,77 @@
+/* cards section — dark background */
+.cards-container {
+  background-color: #080a1a;
+  margin: 0 !important;
+  padding: 60px 0 !important;
+}
+
+/* 1-col mobile, 2-col desktop */
 .cards > ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+  grid-template-columns: 1fr;
   gap: 24px;
 }
 
-.cards > ul > li {
-  border: 1px solid #dadada;
-  background-color: var(--background-color);
+@media (width >= 900px) {
+  .cards > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.cards .cards-card-body {
-  margin: 16px;
+/* card */
+.cards > ul > li {
+  background-color: #1c1f3c;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .cards .cards-card-image {
   line-height: 0;
 }
 
+.cards > ul > li img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.cards .cards-card-body {
+  padding: 28px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* category label — first p before heading */
+.cards .cards-card-body > p:first-child {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* heading */
+.cards .cards-card-body h2,
+.cards .cards-card-body h3 {
+  margin: 0;
+  color: white;
+  font-size: var(--heading-font-size-s);
+}
+
+/* body text */
+.cards .cards-card-body p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--body-font-size-xs);
+}
+
+/* learn more link */
 .cards .cards-card-body a.button:any-link,
 .cards .cards-card-body a:any-link {
   display: inline;
@@ -32,21 +84,17 @@
   white-space: normal;
   overflow: visible;
   text-overflow: unset;
+  margin-top: 4px;
 }
 
 .cards .cards-card-body a.button:any-link::after,
 .cards .cards-card-body a:any-link::after {
-  content: ' \00BB';
+  content: ' \00BB\00BB';
+  letter-spacing: -2px;
 }
 
 .cards .cards-card-body a.button:hover,
 .cards .cards-card-body a:hover {
   color: var(--link-hover-color);
   text-decoration: none;
-}
-
-.cards > ul > li img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
 }

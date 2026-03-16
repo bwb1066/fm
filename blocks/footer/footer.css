@@ -2,13 +2,13 @@ footer {
   background-color: var(--footer-bg-color);
   color: white;
   font-size: var(--body-font-size-xs);
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 footer .footer > div {
   margin: auto;
   max-width: 1200px;
   padding: 0 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 footer .footer p {
@@ -91,47 +91,38 @@ footer .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-footer .footer-copyright {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 13px;
-}
-
-/* columns block inside bottom bar: icons left, copyright right */
-footer .footer-bottom .columns > div {
+/* bottom bar layout */
+footer .footer-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* social icons cell — horizontal row */
-footer .footer-bottom .columns > div > div:first-child {
+/* social icons — horizontal row */
+footer .footer-social-icons {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 20px;
 }
 
-footer .footer-bottom .columns > div > div:first-child p {
-  margin: 0;
-  line-height: 0;
-}
-
-footer .footer-bottom .columns > div > div:first-child img {
+footer .footer-social-icons img {
   width: 24px;
   height: 24px;
   display: block;
   opacity: 0.85;
 }
 
-footer .footer-bottom .columns > div > div:first-child img:hover {
+footer .footer-social-icons img:hover {
   opacity: 1;
 }
 
-/* copyright cell — right-aligned */
-footer .footer-bottom .columns > div > div:last-child {
+/* copyright — right-aligned */
+footer .footer-copyright {
   color: rgba(255, 255, 255, 0.7);
   font-size: 13px;
   text-align: right;
+  white-space: nowrap;
 }
 
 @media (width >= 900px) {
