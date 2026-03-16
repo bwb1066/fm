@@ -2,7 +2,7 @@
 .cards-container {
   background-color: #080a1a;
   margin: 0 !important;
-  padding: 60px 0 !important;
+  padding: 80px 0 !important;
 }
 
 /* 1-col mobile, 2-col desktop */
@@ -46,20 +46,22 @@
   gap: 12px;
 }
 
-/* category label — first p before heading */
-.cards .cards-card-body > p:first-child {
-  margin: 0;
-  font-size: 11px;
+/* category label — h4 kicker */
+.cards .cards-card-body h4 {
+  margin: 0 0 8px;
+  font-family: var(--body-font-family);
+  font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.08em;
+  color: #a1a3b1;
 }
 
 /* heading */
 .cards .cards-card-body h2,
 .cards .cards-card-body h3 {
   margin: 0;
+  font-family: var(--body-font-family);
   color: white;
   font-size: var(--heading-font-size-s);
 }

@@ -301,6 +301,7 @@ main > .section > div {
 
 main > .section:first-of-type {
   margin-top: 0;
+  padding-top: 0 !important;
 }
 
 @media (width >= 900px) {
@@ -325,6 +326,8 @@ main .section.cards-container > .default-content-wrapper {
   padding: 48px 64px;
   text-align: center;
   box-sizing: border-box;
+  margin-top: 80px;
+  margin-bottom: 80px;
 }
 
 main .section.cards-container > .default-content-wrapper ul {
@@ -334,6 +337,7 @@ main .section.cards-container > .default-content-wrapper ul {
 }
 
 main .section.cards-container > .default-content-wrapper h3 {
+  font-family: var(--body-font-family);
   color: #0d102b;
   margin: 0 0 16px;
 }

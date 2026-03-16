@@ -87,12 +87,8 @@ footer a:hover {
 
 /* bottom bar — separated by border */
 footer .footer-bottom {
-  padding: 24px 0 32px;
+  padding: 32px 0 40px;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-/* bottom bar layout */
-footer .footer-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -128,6 +124,10 @@ footer .footer-copyright {
 @media (width >= 900px) {
   footer .footer > div {
     padding: 0 32px;
+  }
+
+  footer .footer-social-icons {
+    gap: 24px;
   }
 }
 

@@ -2,7 +2,7 @@
 main .columns-container {
   background-color: #080a1a;
   margin: 0 !important;
-  padding: 60px 0 !important;
+  padding: 80px 0 !important;
 }
 
 main .columns-container h2 {
@@ -67,8 +67,14 @@ main .columns-container .columns > div > div:last-child p:last-child strong::aft
   order: 1;
 }
 
+main .section.cards-container .columns {
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+
 .columns > div > .columns-img-col {
   order: 0;
+  margin-bottom: 80px;
 }
 
 .columns > div > .columns-img-col img {

@@ -11,6 +11,29 @@ export default async function decorate(block) {
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
   const fragment = await loadFragment(footerPath);
 
+  // The section contains: .default-content-wrapper (nav text) + plain divs for icons and copyright.
+  // The icons/copyright blocks have no class because their first cell has no text block name.
+  const section = fragment.querySelector('.section');
+  const iconsRow = document.createElement('div');
+  iconsRow.className = 'footer-social-icons';
+  const copyrightDiv = document.createElement('div');
+  copyrightDiv.className = 'footer-copyright';
+
+  if (section) {
+    // Extra wrappers = direct div children that are NOT default-content-wrapper
+    [...section.querySelectorAll(':scope > div:not(.default-content-wrapper)')].forEach((wrapper) => {
+      if (wrapper.querySelector('picture')) {
+        // icons block: each icon is in its own nested div cell
+        wrapper.querySelectorAll('picture').forEach((pic) => iconsRow.append(pic));
+      } else {
+        // copyright block: text lives in the innermost div cell
+        const cell = wrapper.querySelector('div > div > div') ?? wrapper;
+        copyrightDiv.textContent = cell.textContent;
+      }
+      wrapper.remove();
+    });
+  }
+
   block.textContent = '';
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
@@ -20,20 +43,17 @@ export default async function decorate(block) {
     strong.replaceWith(...strong.childNodes);
   });
 
-  const contentEl = footer.querySelector('.default-content-wrapper') || footer.querySelector('div div') || footer.querySelector('div');
+  const contentEl = footer.querySelector('.default-content-wrapper') ?? footer.querySelector('div');
   if (!contentEl) return;
 
   const children = [...contentEl.children];
-
   const company = document.createElement('div');
   company.className = 'footer-company';
-
   const linksWrapper = document.createElement('div');
   linksWrapper.className = 'footer-links';
 
   let currentCol = null;
   let reachedLinks = false;
-  let copyrightEl = null;
 
   children.forEach((el) => {
     const tag = el.tagName;
@@ -49,40 +69,16 @@ export default async function decorate(block) {
       linksWrapper.append(currentCol);
     } else if (tag === 'UL' && currentCol) {
       currentCol.append(el);
-    } else if (tag === 'P' && reachedLinks) {
-      copyrightEl = el;
-    } else if (tag === 'DIV') {
-      // columns block containing social icons + copyright
-      copyrightEl = el;
     }
   });
 
-
-  // nav row
   const navRow = document.createElement('div');
   navRow.className = 'footer-nav';
   navRow.append(company, linksWrapper);
 
-  // bottom bar: social icons left, copyright right
   const bottomBar = document.createElement('div');
   bottomBar.className = 'footer-bottom';
-  if (copyrightEl) {
-    // build icons row from all pictures in the columns block
-    const iconsRow = document.createElement('div');
-    iconsRow.className = 'footer-social-icons';
-    copyrightEl.querySelectorAll('picture').forEach((pic) => {
-      const link = pic.closest('a') || pic;
-      iconsRow.append(link);
-    });
-
-    // get copyright text from the second cell or any remaining text node
-    const copyrightText = document.createElement('div');
-    copyrightText.className = 'footer-copyright';
-    const textCell = copyrightEl.querySelector('div > div:last-child');
-    if (textCell) copyrightText.append(...textCell.childNodes);
-
-    bottomBar.append(iconsRow, copyrightText);
-  }
+  bottomBar.append(iconsRow, copyrightDiv);
 
   contentEl.innerHTML = '';
   contentEl.append(navRow, bottomBar);

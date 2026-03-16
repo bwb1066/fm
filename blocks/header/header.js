@@ -171,7 +171,17 @@ export default async function decorate(block) {
   const brandLink = navBrand.querySelector('.button');
   if (brandLink) {
     brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
+    const brandP = brandLink.closest('p');
+    if (brandP) brandP.className = '';
+    // move the Solutions link (and any other text links) into nav-sections as the first item
+    const navSectionsUl = nav.querySelector('.nav-sections ul');
+    if (navSectionsUl) {
+      const li = document.createElement('li');
+      li.append(brandLink);
+      navSectionsUl.prepend(li);
+    }
+    // clean up the <br> left in the brand paragraph
+    navBrand.querySelectorAll('br').forEach((br) => br.remove());
   }
 
   const navSections = nav.querySelector('.nav-sections');
