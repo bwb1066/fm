@@ -147,20 +147,27 @@ export default async function decorate(block) {
       }
     }
 
-    // create tools section with search + language + login icons
+    // build nav-tools from the icon pictures authored in nav-brand
+    // (all <p> elements with only a picture after the first/logo one)
     const toolsDiv = document.createElement('div');
     toolsDiv.className = 'nav-tools';
-    toolsDiv.innerHTML = `
-      <a href="/search" aria-label="Search" class="nav-tool-icon">
-        <img src="/icons/search.svg" alt="Search" width="20" height="20">
-      </a>
-      <span class="nav-tool-divider"></span>
-      <a href="https://www.fmclient.com" aria-label="Client login" class="nav-tool-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="white" stroke-width="1.5"/>
-          <path d="M3 22C3 17.0294 7.02944 13 12 13C16.9706 13 21 17.0294 21 22" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </a>`;
+    const brandContent = brand.querySelector('.default-content-wrapper') ?? brand;
+    const iconParas = [...brandContent.querySelectorAll('p')].filter((p) => p.querySelector('picture'));
+    // first picture-p is the logo — skip it, move the rest to tools
+    iconParas.slice(1).forEach((p, i, arr) => {
+      // add divider before the last icon
+      if (i === arr.length - 1) {
+        const divider = document.createElement('span');
+        divider.className = 'nav-tool-divider';
+        toolsDiv.append(divider);
+      }
+      const pic = p.querySelector('picture');
+      const toolIcon = document.createElement('span');
+      toolIcon.className = 'nav-tool-icon';
+      toolIcon.append(pic);
+      toolsDiv.append(toolIcon);
+      p.remove();
+    });
     nav.append(toolsDiv);
   }
 
